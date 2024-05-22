@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<style type="text/css">
+		#fruits,#stationary,#grossary{
+			background-color: #95f5f5;
+			border: 2px solid steelblue;
+			width: 31%;
+			padding: 5px;
+			height: 220px;
+			display: inline-block;
+			margin-left: 10px;
+			font-family: sans-serif;
+
+		}
+		h2{
+			font-size: 15px;
+			color: black;
+			font-family: Arial;
+		}
+		
+		input[type="checkbox"]
+		{
+			margin-top: 15px;
+		}
+		legend{
+			font-size: 17px;
+			color: darkslateblue;
+		}
+		fieldset{
+			margin-top: 20px;
+			border: 2px solid darkviolet;
+		}
+		button{
+			padding: 8px;
+			width: 100%;
+			border: none;
+			background-color: #000123;
+			color: white;
+			font-size: 17px;
+			font-family: sans-serif;
+		}
+		button:hover{
+			background-color: white;
+			cursor: pointer;
+			color: black;
+		}
+		#print_c{
+			margin-left: 90px;
+			padding: 7px;
+			width: 100%;
+			border: none;
+			background-color: #000123;
+			color: white;
+			font-size: 17px;
+			font-family: sans-serif;
+		}
+		.show_fruits,.show_stationary,.show_grossary{
+			display: none;
+			position: absolute;
+		}
+	</style>
+
+	<script src="jquery.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			$("#f").click(function()
+			{
+				$(".show_fruits").fadeToggle();
+			})
+			$("#s").click(function()
+			{
+				$(".show_stationary").fadeToggle();
+			})
+			$("#g").click(function()
+			{
+				$(".show_grossary").fadeToggle();
+			})
+
+		})
+
+		// code for biiling
+
+		function billing()
+		{
+			var price=[200,300,400,150,450,30,1000,250,50,160,40,400,650,100,750];
+			var tot_cost=0;
+
+			for(i=0; i<=14; i++)
+			{
+				if(document.f1.product[i].checked==true)
+				{
+					tot_cost=tot_cost + price[i];
+				}
+			}
+
+			document.f1.bill.value=tot_cost;
+			var sgst=tot_cost*10;
+			var cgst=tot_cost*10;
+
+			document.f1.sgst.value=sgst;
+			document.f1.cgst.value=cgst;
+
+			document.f1.final_bill.value=tot_cost+sgst+cgst;
+
+			bank_credit_card();
+		}
+		function bank_credit_card()
+		{
+			var fbill=parseInt(document.f1.final_bill.value);
+			var cc_value=parseInt(document.f1.creditcard.value);			
+			var dis=fbill * (cc_value/100);
+			document.f1.dis_amt.value=dis;
+			document.f1.bill_aft_dis.value=fbill-dis;
+		}
+	</script>
+</head>
+<body>
+	<form name="f1">
+	
+		<fieldset>
+			<legend>Purchase Product</legend>
+		
+	<div id="fruits">
+		<button id="f" type="button">Order Fruits</button> <br>
+
+		<div class="show_fruits">
+
+		<input type="checkbox" name="product" value="Mango" onclick="billing()">Mango &#8377 200/kg <br>
+		<input type="checkbox" name="product" value="Apple" onclick="billing()">Apple &#8377 300/kg <br>
+		<input type="checkbox" name="product" value="Kiwi" onclick="billing()">Kiwi &#8377 400/kg <br>
+		<input type="checkbox" name="product" value="Grapes" onclick="billing()">Grapes &#8377 200/kg <br>
+		<input type="checkbox" name="product" value="Strobery" onclick="billing()">Strobery &#8377 200/kg <br>
+
+		</div> <!-- end show_fruits div -->
+
+	</div> <!-- end fruits div -->
+
+	<div id="stationary">
+		<button id="s" type="button">Order Stationary Product</button> <br>
+		<div class="show_stationary">
+		<input type="checkbox" name="product" value="Marker" onclick="billing()">Marker &#8377 200/kg <br>
+		<input type="checkbox" name="product" value="Bag" onclick="billing()">Bag &#8377 200/kg <br>
+		<input type="checkbox" name="product" value="PhoneCover" onclick="billing()">Phone Cover &#8377 200/kg <br>
+		<input type="checkbox" name="product" value="Pen" onclick="billing()">Pen &#8377 200/kg <br>
+		<input type="checkbox" name="product" value="Books" onclick="billing()">Books &#8377 200/kg <br>
+		</div> <!-- end show_Stationary div -->
+
+	</div> <!-- end stationary div -->
+
+	<div id="grossary">
+		<button id="g" type="button">Order Grossary Product</button> <br>
+		<div class="show_grossary">
+		<input type="checkbox" name="product" value="Sugar" onclick="billing()">Sugar &#8377 200/kg <br>
+		<input type="checkbox" name="product" value="Tea" onclick="billing()">Tea &#8377 200/kg <br>
+		<input type="checkbox" name="product" value="DryFruits" onclick="billing()">DryFruits Cover &#8377 200/kg <br>
+		<input type="checkbox" name="product" value="GoodDay" onclick="billing()">GoodDay &#8377 200/kg <br>
+		<input type="checkbox" name="product" value="ParleG" onclick="billing()">ParleG &#8377 200/kg <br>
+		</div> <!-- end show_Grossarry div -->
+
+	</div> <!-- end grossary div -->
+
+	</fieldset>
+
+
+
+
+	<fieldset>
+		<legend>Product Billing Details</legend>
+
+		<table cellpadding="7" width="80%">
+			<tr>
+				<td>Total Bill</td>
+				<td><input type="text" name="bill"></td>
+			</tr>
+
+			<tr>
+				<td>CGST 10%</td>
+				<td><input type="text" name="cgst"></td>
+			</tr>
+
+			<tr>
+				<td>SGST 10%</td>
+				<td><input type="text" name="sgst"></td>
+			</tr>
+
+			<tr>
+				<td>Final Bill</td>
+				<td><input type="text" name="final_bill"></td>
+			</tr>
+
+			<tr>
+				<td colspan="2">
+					<input type="radio" name="creditcard" onclick="bank_credit_card()" value="10">Axis Bank 10% Discount
+					<input type="radio" name="creditcard" onclick="bank_credit_card()" value="15">HDFC Bank 15% Discount
+					<input type="radio" name="creditcard" onclick="bank_credit_card()" value="20">ICICI Bank 25% Discount					
+				</td>
+			</tr>
+
+			<tr>
+				<td>Discount Amount</td>
+				<td><input type="text" name="dis_amt"></td>
+			</tr>
+
+			<tr>
+				<td>Bill Amount After Discount</td>
+				<td><input type="text" name="bill_aft_dis"></td>
+
+				<td><input type="button" value="print" id="print_c" onclick="print()"></td>
+			</tr>
+		</table>
+	</fieldset>
+
+</form>
+</body>
+</html>
